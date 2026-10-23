@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AliBaba — Меню</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#4a0e1c;--wine2:#6b1a2b;--ink:#121011;--card:#1b1416;--gold:#c2a15a;--gold2:#a8873e;--text:#f1e6d3;--mute:#b8a99a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark}}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font:400 15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:"Cormorant Garamond",Georgia,serif}
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px;
+background:radial-gradient(ellipse at 50% 30%,var(--wine2) 0,var(--wine) 45%,var(--ink) 100%);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:16px;border:1px solid rgba(194,161,90,.35);border-radius:4px;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:22px;border:1px solid rgba(194,161,90,.15);pointer-events:none}
+.arch{width:132px;height:168px;margin-bottom:22px}
+.logo{font-size:clamp(54px,17vw,84px);font-weight:700;letter-spacing:.04em;line-height:1;margin:0;color:var(--gold);text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.sub{margin:10px 0 0;font-size:15px;letter-spacing:.18em;color:var(--mute)}
+.hello{margin:34px 0 8px;font-size:26px;font-weight:600}
+.lead{margin:0 0 34px;color:var(--mute);max-width:300px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,var(--gold),var(--gold2));color:#2a1a08;border:0;border-radius:999px;
+padding:16px 36px;font:600 16px Manrope,sans-serif;text-decoration:none;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.btn:focus-visible,.tab:focus-visible{outline:2px solid #fff;outline-offset:3px}
+main{max-width:640px;margin:0 auto}
+.bar{position:sticky;top:0;z-index:5;padding:calc(10px + env(safe-area-inset-top,0px)) 0 10px;background:rgba(18,16,17,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(194,161,90,.25)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 16px 0;scrollbar-width:none}
+.langs{display:flex;gap:6px;justify-content:center}
+.lg{background:transparent;color:var(--mute);border:1px solid rgba(194,161,90,.3);border-radius:8px;padding:6px 12px;font:600 12px Manrope,sans-serif;cursor:pointer}
+.lg[aria-pressed=true]{color:var(--gold);border-color:var(--gold)}
+.lg:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.hero .langs{position:absolute;top:calc(36px + env(safe-area-inset-top,0px));left:0;right:0;z-index:1}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;background:transparent;color:var(--mute);border:1px solid rgba(194,161,90,.35);border-radius:999px;padding:10px 16px;font:500 14px Manrope,sans-serif;cursor:pointer;white-space:nowrap}
+.tab[aria-selected=true]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:600}
+.list{padding:20px 16px 8px;display:grid;gap:18px}
+.dish{background:var(--card);border:1px solid rgba(194,161,90,.18);border-radius:14px;overflow:hidden}
+.ph{height:200px;display:flex;align-items:center;justify-content:center;font-size:84px;background:radial-gradient(circle at 50% 40%,var(--c1),var(--c2));position:relative}
+.ph::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--card),transparent 45%)}
+.ph span{position:relative;z-index:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5))}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph img~span{display:none}
+.info{padding:6px 18px 18px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.name{margin:0;font-size:24px;font-weight:700;line-height:1.15}
+.price{flex:none;color:var(--gold);font-weight:600;white-space:nowrap}
+.desc{margin:8px 0 0;color:var(--mute);font-size:14px}
+footer{margin-top:28px;padding:36px 24px calc(40px + env(safe-area-inset-bottom,0px));text-align:center;background:linear-gradient(180deg,var(--ink),var(--wine))}
+footer h2{margin:0 0 6px;font-size:28px}
+footer p{margin:0 0 20px;color:var(--mute)}
+.ig{display:inline-flex;align-items:center;gap:8px;margin-top:22px;color:var(--gold);text-decoration:none;font-weight:500}
+.ig svg{width:26px;height:26px}
+.ig:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.view[hidden]{display:none}
+.view.in{animation:vin .5s cubic-bezier(.2,.7,.2,1) both}
+.view.out{animation:vout .32s ease-in both}
+@keyframes vin{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes vout{to{opacity:0;transform:translateY(-22px) scale(.98)}}
+.cats{max-width:640px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top,0px)) 16px 8px;min-height:80svh}
+.cats h2{margin:22px 0 0;font-size:34px;text-align:center}
+.cgrid{display:grid;gap:14px;margin-top:22px}
+.cat{display:flex;align-items:center;gap:16px;width:100%;text-align:left;color:var(--text);border:1px solid rgba(194,161,90,.35);border-radius:16px;padding:20px 18px;background:radial-gradient(circle at 12% 50%,var(--c1),var(--c2));cursor:pointer;font:inherit;opacity:0;animation:vin .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*90ms + 100ms);transition:transform .2s}
+.cat:active{transform:scale(.97)}
+.cat:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cat .em{font-size:46px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+.cat b{display:block;font-size:24px;line-height:1.15}
+.cat small{color:var(--mute)}
+.cat .chev{margin-left:auto;color:var(--gold);font-size:28px}
+.topline{display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.topline .langs{justify-content:flex-end}
+.back{background:none;border:0;color:var(--gold);font:600 15px Manrope,sans-serif;cursor:pointer;padding:6px 0}
+.back:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.list.swap{animation:vin .4s both}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.cat{opacity:1}}
+</style>
+</head>
+<body>
+<section class="hero view" id="vHero">
+  <div class="langs" role="group" aria-label="Language"></div>
+  <svg class="arch" viewBox="0 0 132 168" fill="none" stroke="#c2a15a" stroke-width="1.5" aria-hidden="true">
+    <path d="M10 166V80C10 40 40 20 66 4c26 16 56 36 56 76v86"/>
+    <path d="M26 166V84c0-30 22-46 40-60 18 14 40 30 40 60v82" opacity=".6"/>
+    <circle cx="66" cy="84" r="5" fill="#c2a15a"/>
+  </svg>
+  <h1 class="logo serif">AliBaba</h1>
+  <p class="sub" data-k="sub"></p>
+  <p class="hello serif" data-k="hello"></p>
+  <p class="lead" data-k="lead"></p>
+  <button class="btn" id="openBtn" data-k="open"></button>
+</section>
+
+<section class="cats view" id="vCats" hidden>
+  <div class="langs" role="group" aria-label="Language"></div>
+  <h2 class="serif" data-k="pick"></h2>
+  <div class="cgrid" id="cgrid"></div>
+</section>
+<main id="menu" class="view" hidden>
+  <div class="bar"><div class="topline"><button class="back" id="back" data-k="back"></button><div class="langs" role="group" aria-label="Language"></div></div><div class="tabs" role="tablist" id="tabs"></div></div>
+  <div class="list" id="list" role="tabpanel"></div>
+</main>
+
+<footer>
+  <h2 class="serif" data-k="foot"></h2>
+  <p data-k="city"></p>
+  <a class="btn" href="tel:+998952001616"><span data-k="book"></span>&nbsp;(95) 200-16-16</a><br>
+  <a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram AliBaba">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg>
+    Instagram
+  </a>
+</footer>
+
+<script>
+const L=["ru","uz","tr","en"],UNIT=["сум","so‘m","som","UZS"];
+const UI={
+sub:["ВОСТОЧНАЯ И ТУРЕЦКАЯ КУХНЯ","SHARQ VA TURK OSHXONASI","DOĞU VE TÜRK MUTFAĞI","ORIENTAL & TURKISH CUISINE"],
+hello:["Добро пожаловать в Андижан","Andijonga xush kelibsiz","Andican’a hoş geldiniz","Welcome to Andijan"],
+lead:["Огонь мангала, тандыр и вековые рецепты — на вашем столе.","Mangal olovi, tandir va asriy retseptlar — dasturxoningizda.","Mangal ateşi, tandır ve asırlık tarifler — sofranızda.","Charcoal fire, tandoor and age-old recipes — at your table."],
+open:["Открыть меню","Menyuni ochish","Menüyü aç","Open menu"],
+foot:["Ждём вас в AliBaba","AliBabada sizni kutamiz","AliBaba’da sizi bekliyoruz","We look forward to seeing you at AliBaba"],
+city:["Андижан","Andijon","Andican","Andijan"],
+book:["Забронировать стол:","Stol band qilish:","Masa rezervasyonu:","Book a table:"],
+pick:["Выберите раздел","Bo‘limni tanlang","Bölüm seçin","Choose a section"],
+back:["‹ Разделы","‹ Bo‘limlar","‹ Bölümler","‹ Sections"]};
+const MENU=[
+{t:["Кебабы и Мясо","Kabob va go‘sht","Kebap ve Et","Kebabs & Meat"],c:["#7a2a1a","#2a0d0a"],items:[
+["🍢",98000,["Адана кебаб","Adana kabob","Adana Kebap","Adana Kebab"],["Рубленая баранина с острым перцем, приготовленная на мангале. Подаётся с лавашом и сумахом.","Achchiq qalampirli maydalangan qo‘y go‘shti, mangalda pishirilgan. Lavash va sumak bilan.","Acı biberli kıyma kuzu eti, mangalda pişirilir. Lavaş ve sumakla servis edilir.","Minced lamb with hot pepper, grilled over charcoal. Served with lavash and sumac."]],
+["🥩",165000,["Ассорти кебаб","Assorti kabob","Karışık Kebap","Mixed Kebab Platter"],["Адана, шиш из ягнёнка и куриные крылышки с гриля. Овощи на углях и рис с вермишелью.","Adana, qo‘zi sheshlik va grilda pishgan tovuq qanotlari. Cho‘gda pishgan sabzavotlar va sevikli guruch.","Adana, kuzu şiş ve ızgara tavuk kanat. Közlenmiş sebze ve şehriyeli pilav.","Adana, lamb shish and grilled chicken wings. Charcoal vegetables and vermicelli rice."]],
+["🍖",185000,["Ягнёнок на тандыре","Tandirda qo‘zi go‘shti","Tandır Kuzu","Tandoor Lamb"],["Нежная лопатка, томлённая 6 часов в тандыре, с пряными травами и печёным луком.","Tandirda 6 soat dimlangan yumshoq kurak go‘sht, xushbo‘y ziravorlar va pishirilgan piyoz bilan.","Tandırda 6 saat pişen yumuşacık kuzu kürek, baharatlı otlar ve fırınlanmış soğanla.","Tender shoulder slow-cooked 6 hours in the tandoor, with spiced herbs and roasted onion."]],
+["🍗",76000,["Куриный шиш","Tovuq sheshlik","Tavuk Şiş","Chicken Shish"],["Маринад из йогурта и паприки, сочное филе на шпажках. Гарнир — булгур и свежие овощи.","Yogurt va paprika marinadidagi shirali tovuq filesi. Garnir — bulgur va yangi sabzavotlar.","Yoğurt ve paprika marinasında sulu tavuk fileto. Yanında bulgur pilavı ve taze sebze.","Juicy chicken fillet marinated in yogurt and paprika. Served with bulgur and fresh vegetables."]]]},
+{t:["Турецкая выпечка (Пиде)","Turk xamir taomlari (Pide)","Türk Hamur İşleri (Pide)","Turkish Pastry (Pide)"],c:["#8a5a1c","#2b1a08"],items:[
+["🥟",68000,["Пиде с мясом","Go‘shtli pide","Etli Pide","Meat Pide"],["Лодочка из тонкого теста с рубленой бараниной, томатами и зелёным перцем.","Yupqa xamirdan qayiqcha, maydalangan qo‘y go‘shti, pomidor va yashil qalampir bilan.","İnce hamurdan kayık, kıyma kuzu eti, domates ve yeşil biberle.","Thin-dough boat with minced lamb, tomatoes and green pepper."]],
+["🧀",59000,["Пиде с тремя сырами","Uch xil pishloqli pide","Üç Peynirli Pide","Three-Cheese Pide"],["Тянущаяся моцарелла, кашар и брынза. Золотистая корочка, масло с чесноком.","Cho‘ziluvchan motsarella, kashar va brinza. Tillarang qobiq, sarimsoqli yog‘.","Uzayan mozzarella, kaşar ve beyaz peynir. Altın kabuk, sarımsaklı tereyağı.","Stretchy mozzarella, kashar and brined cheese. Golden crust, garlic butter."]],
+["🍳",72000,["Пиде с яйцом и суджуком","Tuxum va sujukli pide","Yumurtalı Sucuklu Pide","Egg & Sujuk Pide"],["Пряная колбаска, мягкий желток и расплавленный сыр на хрустящей основе.","Achchiq kolbasa, yumshoq sarig‘i va erigan pishloq, qarsildoq asosda.","Baharatlı sucuk, akışkan sarısı ve eriyen peynir çıtır hamur üzerinde.","Spiced sausage, soft yolk and melted cheese on a crisp base."]],
+["🥬",45000,["Гёзлеме со шпинатом","Ismaloqli gözleme","Ispanaklı Gözleme","Spinach Gözleme"],["Тонкая лепёшка со шпинатом и творожным сыром, обжаренная на садже.","Ismaloq va tvorogli pishloqli yupqa lepyoshka, sajda qovurilgan.","Ispanak ve lor peynirli ince yufka, sacda pişirilir.","Thin flatbread with spinach and curd cheese, cooked on a saj griddle."]]]},
+{t:["Восточные десерты","Sharq shirinliklari","Doğu Tatlıları","Oriental Desserts"],c:["#7a5a22","#25190a"],items:[
+["🍯",42000,["Пахлава с фисташкой","Pistali paxlava","Fıstıklı Baklava","Pistachio Baklava"],["Хрустящие слои теста, фисташки и медовый сироп. Подаётся с каймаком.","Qarsildoq xamir qatlamlari, pista va asalli sirop. Qaymoq bilan.","Çıtır yufka katları, fıstık ve bal şerbeti. Kaymakla servis edilir.","Crisp layers of pastry, pistachios and honey syrup. Served with kaymak."]],
+["🍮",55000,["Кюнефе","Künefe","Künefe","Künefe"],["Горячий сыр под нитями кадаифа, залитый сиропом и посыпанный фисташкой.","Kadayif iplari ostidagi issiq pishloq, sirop va pista sepilgan.","Kadayıf teller altında sıcak peynir, şerbet ve fıstıkla.","Hot cheese under strands of kadayif, soaked in syrup and topped with pistachio."]],
+["🍬",35000,["Лукум-ассорти","Assorti lukum","Karışık Lokum","Turkish Delight Assortment"],["Нежный рахат-лукум с розой, гранатом и орехами. Идеален к чаю.","Atirgul, anor va yong‘oqli nozik rohat-lukum. Choyga ayni muddao.","Gül, nar ve cevizli yumuşak lokum. Çayın en iyi eşlikçisi.","Soft Turkish delight with rose, pomegranate and nuts. Perfect with tea."]],
+["🥛",32000,["Сютлач","Sutlach","Sütlaç","Sütlaç"],["Запечённый рисовый пудинг с карамелизированной корочкой и корицей.","Karamellashgan qobiqli, dolchinli pishirilgan guruch pudingi.","Karamelize kabuklu, tarçınlı fırın sütlaç.","Baked rice pudding with a caramelized crust and cinnamon."]]]},
+{t:["Напитки","Ichimliklar","İçecekler","Drinks"],c:["#5a1a2e","#1d0912"],items:[
+["☕",22000,["Турецкий кофе","Turkcha qahva","Türk Kahvesi","Turkish Coffee"],["Медленно варится на песке в джезве. Подаётся с рахат-лукумом и водой.","Qumda jezvada sekin damlanadi. Rohat-lukum va suv bilan.","Cezvede kumda yavaşça pişer. Lokum ve suyla servis edilir.","Slowly brewed on hot sand in a cezve. Served with Turkish delight and water."]],
+["🫖",28000,["Чай по-турецки","Turkcha choy","Türk Çayı","Turkish Tea"],["Крепкий чёрный чай в стеклянном стакане-армуде. Чайник на двоих.","Armudi stakandagi kuchli qora choy. Ikki kishilik choynak.","İnce belli bardakta demli siyah çay. İki kişilik demlik.","Strong black tea in a tulip-shaped glass. A pot for two."]],
+["🥤",18000,["Айран","Ayron","Ayran","Ayran"],["Освежающий кисломолочный напиток с горной минеральной водой и мятой.","Tog‘ mineral suvi va yalpiz qo‘shilgan salqin qatiq ichimlik.","Dağ maden suyu ve naneyle ferahlatıcı yoğurt içeceği.","Refreshing yogurt drink with mountain mineral water and mint."]],
+["🍹",38000,["Гранатовый фреш","Anor sharbati","Nar Suyu","Pomegranate Fresh"],["Свежевыжатый сок из спелого граната, без сахара.","Pishgan anordan yangi siqilgan sharbat, shakarsiz.","Olgun nardan taze sıkılmış, şekersiz.","Freshly squeezed ripe pomegranate juice, no added sugar."]]]}
+];
+// Фото блюд: "Название по-русски":"ссылка на фото"
+const PHOTOS={
+// "Адана кебаб":"https://example.com/adana.jpg",
+};
+const isU=s=>/^https?:/i.test(s);
+const photoOf=d=>PHOTOS[d[2][0]]||(isU(d[0])?d[0]:"");
+const iconOf=d=>isU(d[0])?"🍽️":d[0];
+const tabs=document.getElementById("tabs"),list=document.getElementById("list");
+let lang=0,cur=0,view="hero";
+try{const sv=localStorage.getItem("ab-lang");if(sv&&L.includes(sv))lang=L.indexOf(sv);else{const n=(navigator.language||"ru").slice(0,2);if(L.includes(n))lang=L.indexOf(n)}}catch(e){}
+const fmt=n=>String(n).replace(/\B(?=(\d{3})+$)/g," ")+" "+UNIT[lang];
+function render(){
+  document.documentElement.lang=L[lang];
+  document.querySelectorAll("[data-k]").forEach(e=>e.textContent=UI[e.dataset.k][lang]);
+  document.querySelectorAll(".langs").forEach(w=>{w.innerHTML="";L.forEach((c,i)=>{const b=document.createElement("button");b.className="lg";b.textContent=c.toUpperCase();b.setAttribute("aria-pressed",i===lang);b.onclick=()=>{lang=i;try{localStorage.setItem("ab-lang",c)}catch(e){}render()};w.appendChild(b)})});
+  if(view==="cats")renderCats();
+  tabs.innerHTML="";
+  MENU.forEach((m,i)=>{const b=document.createElement("button");b.className="tab";b.role="tab";b.textContent=m.t[lang];b.setAttribute("aria-selected",i===cur);b.onclick=()=>{cur=i;render();list.classList.remove("swap");void list.offsetWidth;list.classList.add("swap");tabs.children[i].scrollIntoView({inline:"center",block:"nearest"})};tabs.appendChild(b)});
+  list.innerHTML=MENU[cur].items.map(d=>`<article class="dish"><div class="ph" style="--c1:${MENU[cur].c[0]};--c2:${MENU[cur].c[1]}">${photoOf(d)?`<img src="${photoOf(d)}" alt="${d[2][lang]}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span aria-hidden="true">${iconOf(d)}</span></div><div class="info"><div class="row"><h3 class="name serif">${d[2][lang]}</h3><span class="price">${fmt(d[1])}</span></div><p class="desc">${d[3][lang]}</p></div></article>`).join("");
+}
+function renderCats(){
+  const g=document.getElementById("cgrid");
+  g.innerHTML=MENU.map((m,i)=>`<button class="cat" style="--c1:${m.c[0]};--c2:${m.c[1]};--i:${i}" data-i="${i}"><span class="em" aria-hidden="true">${iconOf(m.items[0])}</span><span><b class="serif">${m.t[lang]}</b><small>${m.items.length} ${["блюда","taom","yemek","dishes"][lang]}</small></span><span class="chev" aria-hidden="true">›</span></button>`).join("");
+  g.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;go("menu")});
+}
+const V={hero:document.getElementById("vHero"),cats:document.getElementById("vCats"),menu:document.getElementById("menu")};
+let busy=false;
+function go(to){
+  if(busy||V[view]===V[to])return;busy=true;
+  const from=V[view];view=to;render();
+  from.classList.remove("in");from.classList.add("out");
+  setTimeout(()=>{from.hidden=true;from.classList.remove("out");const n=V[to];n.hidden=false;n.classList.add("in");window.scrollTo(0,0);busy=false},matchMedia("(prefers-reduced-motion:reduce)").matches?0:320);
+}
+document.getElementById("openBtn").onclick=()=>go("cats");
+document.getElementById("back").onclick=()=>go("cats");
+render();
+</script>
+</body>
+</html>
